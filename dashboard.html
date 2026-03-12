@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Fuse OS Discord Bot</title>
+  <meta name="description" content="The Fuse OS web dashboard — configure every feature of your server from one clean interface." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  <style>
+    /* Dashboard-specific extras */
+    .dash-hero {
+      position: relative;
+      z-index: 2;
+      padding: calc(var(--nav-height) + 60px) 0 48px;
+      text-align: center;
+    }
+    .dash-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(139,92,246,0.1);
+      border: 1px solid rgba(139,92,246,0.3);
+      border-radius: var(--radius-md);
+      padding: 12px 20px;
+      font-size: 0.88rem;
+      color: var(--neon-purple);
+      margin: 24px auto 0;
+      max-width: 540px;
+    }
+    .dash-wrapper {
+      position: relative;
+      z-index: 2;
+      padding: 0 0 100px;
+    }
+    /* Tabs on mobile */
+    .dash-mobile-tabs {
+      display: none;
+      overflow-x: auto;
+      gap: 8px;
+      padding: 0 0 16px;
+      margin-bottom: 20px;
+      scrollbar-width: none;
+    }
+    .dash-mobile-tabs::-webkit-scrollbar { display: none; }
+    .dash-mobile-tab {
+      flex-shrink: 0;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border-card);
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: var(--transition-fast);
+    }
+    .dash-mobile-tab.active {
+      background: var(--grad-primary);
+      border-color: transparent;
+      color: #fff;
+    }
+    @media (max-width: 1024px) {
+      .dash-mobile-tabs { display: flex; }
+    }
+    /* Color-coded row indicators */
+    .row-indicator {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .row-indicator.green  { background: #57f287; box-shadow: 0 0 6px #57f287; }
+    .row-indicator.blue   { background: var(--neon-blue); box-shadow: 0 0 6px var(--neon-blue); }
+    .row-indicator.orange { background: #faa61a; box-shadow: 0 0 6px #faa61a; }
+    .row-indicator.red    { background: #ed4245; box-shadow: 0 0 6px #ed4245; }
+
+    /* Fake progress bar */
+    .mini-bar-wrap {
+      height: 6px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 3px;
+      overflow: hidden;
+      flex: 1;
+    }
+    .mini-bar {
+      height: 100%;
+      border-radius: 3px;
+      background: var(--grad-primary);
+    }
+
+    /* Channel picker mock */
+    .channel-pick {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      min-width: 180px;
+    }
+    .channel-pick:hover { border-color: var(--border-glow); color: var(--text-primary); }
+    .channel-hash { color: var(--text-muted); }
+
+    /* Add button */
+    .dash-add-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.2);
+      color: var(--neon-blue);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .dash-add-btn:hover { background: rgba(0,212,255,0.15); }
+
+    .ticket-category-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .ticket-category-row:last-child { border-bottom: none; }
+    .ticket-cat-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-size: 0.9rem;
+      background: var(--bg-surface);
+      flex-shrink: 0;
+    }
+    .ticket-cat-name {
+      flex: 1;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+    .ticket-cat-count {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Giveaway active row */
+    .gwy-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .gwy-row:last-child { border-bottom: none; }
+    .gwy-prize { flex: 1; font-size: 0.9rem; color: var(--text-primary); font-weight: 500; }
+    .gwy-id { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted); }
+    .gwy-end { font-size: 0.82rem; color: var(--neon-blue); white-space: nowrap; }
+  </style>
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">⚡</div>
+      <span>FUSE OS</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html"     class="nav-link">Home</a></li>
+      <li><a href="features.html"  class="nav-link">Features</a></li>
+      <li><a href="commands.html"  class="nav-link">Commands</a></li>
+      <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+      <li><a href="#"              class="nav-link">Support</a></li>
+      <a href="#" class="btn btn-primary nav-cta">Invite Bot</a>
+    </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── Dashboard Hero ─────────────────────────────────────── -->
+<div class="dash-hero">
+  <div class="hero-glow hero-glow-1" style="opacity:0.3"></div>
+  <div class="container" style="position:relative;z-index:2">
+    <div class="section-label" style="margin:0 auto 20px;display:table">Control Center</div>
+    <h1 class="section-title" style="text-align:center"><span class="gradient-text">Dashboard</span> Preview</h1>
+    <p class="section-subtitle" style="margin:0 auto;text-align:center">A live UI mockup of the Fuse OS web dashboard. Configure every system from one clean interface.</p>
+    <div class="dash-note">
+      ⚡ This is a <strong>UI preview</strong>. Real-time configuration is available after inviting the bot.
+    </div>
+  </div>
+</div>
+
+<!-- ── Dashboard App ──────────────────────────────────────── -->
+<div class="dash-wrapper">
+  <div class="container">
+
+    <!-- Mobile tabs -->
+    <div class="dash-mobile-tabs">
+      <button class="dash-mobile-tab active" data-target="autoroles">Auto Roles</button>
+      <button class="dash-mobile-tab" data-target="giveaway">Giveaway</button>
+      <button class="dash-mobile-tab" data-target="tickets">Tickets</button>
+      <button class="dash-mobile-tab" data-target="ai">AI Settings</button>
+      <button class="dash-mobile-tab" data-target="polls">Polls</button>
+    </div>
+
+    <div class="dashboard-layout">
+
+      <!-- ── Sidebar ──────────────────────────────────────── -->
+      <div class="dash-sidebar">
+        <div class="dash-sidebar-title">Server</div>
+        <div class="dash-nav-item" style="padding: 11px 14px; margin-bottom: 8px; background: rgba(0,212,255,0.05); border: 1px solid rgba(0,212,255,0.1); border-radius: var(--radius-md)">
+          <span>🖥️</span>
+          <span style="flex:1;font-size:0.9rem;color:var(--text-primary);font-weight:500">My Server</span>
+          <span style="font-size:0.72rem;color:var(--neon-blue);font-family:var(--font-mono)">●  ONLINE</span>
+        </div>
+
+        <div class="dash-sidebar-title" style="margin-top:12px">Configuration</div>
+        <div class="dash-nav-item active" data-target="autoroles">
+          <span class="dash-nav-icon">🎭</span> Auto Roles
+        </div>
+        <div class="dash-nav-item" data-target="giveaway">
+          <span class="dash-nav-icon">🎉</span> Giveaway
+        </div>
+        <div class="dash-nav-item" data-target="tickets">
+          <span class="dash-nav-icon">🎟️</span> Tickets
+        </div>
+        <div class="dash-nav-item" data-target="ai">
+          <span class="dash-nav-icon">🤖</span> AI Settings
+        </div>
+        <div class="dash-nav-item" data-target="polls">
+          <span class="dash-nav-icon">📊</span> Polls
+        </div>
+
+        <div class="dash-sidebar-title" style="margin-top:12px">System</div>
+        <div class="dash-nav-item">
+          <span class="dash-nav-icon">📋</span> Logs
+        </div>
+        <div class="dash-nav-item">
+          <span class="dash-nav-icon">🌐</span> Translation
+        </div>
+        <div class="dash-nav-item">
+          <span class="dash-nav-icon">📢</span> Welcome
+        </div>
+        <div class="dash-nav-item">
+          <span class="dash-nav-icon">⚙️</span> General
+        </div>
+      </div>
+
+      <!-- ── Main Panels ───────────────────────────────────── -->
+      <div class="dash-main">
+
+        <!-- ── Stats Row ─────────────────────────────────── -->
+        <div class="dash-stats-row">
+          <div class="dash-stat-mini">
+            <div class="dash-stat-mini-num" data-count="2847">0</div>
+            <div class="dash-stat-mini-label">Total Members</div>
+          </div>
+          <div class="dash-stat-mini">
+            <div class="dash-stat-mini-num" data-count="142">0</div>
+            <div class="dash-stat-mini-label">Active Today</div>
+          </div>
+          <div class="dash-stat-mini">
+            <div class="dash-stat-mini-num" data-count="38">0</div>
+            <div class="dash-stat-mini-label">Commands Run</div>
+          </div>
+        </div>
+
+        <!-- ═══ AUTO ROLES PANEL ═══════════════════════════ -->
+        <div class="dash-panel" data-panel="autoroles">
+          <div class="dash-panel-header">
+            <span class="dash-panel-title">🎭  Auto Roles</span>
+            <span class="dash-badge dash-badge-green">Enabled</span>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Newcomer Role</h4>
+              <p>Assigned to every member on join</p>
+            </div>
+            <select class="dash-select">
+              <option>👋 New Member</option>
+              <option>🔰 Unverified</option>
+              <option>🌱 Newcomer</option>
+            </select>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Content Fan Role</h4>
+              <p>Assigned after YouTube verification</p>
+            </div>
+            <select class="dash-select">
+              <option>📺 Content Fan</option>
+              <option>⭐ Subscriber</option>
+              <option>🎯 Verified Fan</option>
+            </select>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Top Leader Role</h4>
+              <p>Assigned to top 3 leaderboard members</p>
+            </div>
+            <select class="dash-select">
+              <option>👑 Top Leader</option>
+              <option>🏆 Champion</option>
+              <option>⚡ Elite</option>
+            </select>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Timed Role Removal</h4>
+              <p>Auto-remove newcomer role after duration</p>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Removal Timer</h4>
+              <p>How long until the newcomer role is removed</p>
+            </div>
+            <select class="dash-select">
+              <option>24 hours</option>
+              <option>48 hours</option>
+              <option>7 days</option>
+              <option>30 days</option>
+            </select>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Log Channel</h4>
+              <p>Where role assignments are logged</p>
+            </div>
+            <div class="channel-pick">
+              <span class="channel-hash">#</span> role-logs
+              <span style="margin-left:auto;color:var(--text-muted);font-size:0.8rem">▼</span>
+            </div>
+          </div>
+
+          <div style="margin-top:20px;display:flex;gap:12px">
+            <button class="btn btn-primary" style="font-size:0.88rem;padding:10px 20px">Save Changes</button>
+            <button class="btn btn-ghost" style="font-size:0.88rem;padding:10px 20px">Reset</button>
+          </div>
+        </div>
+
+        <!-- ═══ GIVEAWAY PANEL ══════════════════════════════ -->
+        <div class="dash-panel" data-panel="giveaway" style="display:none">
+          <div class="dash-panel-header">
+            <span class="dash-panel-title">🎉  Giveaway Settings</span>
+            <span class="dash-badge dash-badge-blue">3 Active</span>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Giveaway Ping Role</h4>
+              <p>Role mentioned when a giveaway starts</p>
+            </div>
+            <select class="dash-select">
+              <option>🎉 Giveaway Pings</option>
+              <option>📢 Announcements</option>
+              <option>@everyone</option>
+              <option>— Disabled —</option>
+            </select>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Content Fan Role</h4>
+              <p>Required role for subscriber-only giveaways</p>
+            </div>
+            <select class="dash-select">
+              <option>📺 Content Fan</option>
+              <option>⭐ Subscriber</option>
+            </select>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>YouTube Channel URL</h4>
+              <p>Shown in the "not subscribed" embed</p>
+            </div>
+            <input type="text" class="dash-input" value="https://youtube.com/@YourChannel" style="min-width:220px"/>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Log Channel</h4>
+              <p>Where giveaway events are logged</p>
+            </div>
+            <div class="channel-pick">
+              <span class="channel-hash">#</span> giveaway-log
+              <span style="margin-left:auto;color:var(--text-muted);font-size:0.8rem">▼</span>
+            </div>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Winner Auto-DM</h4>
+              <p>DM winners when their giveaway ends</p>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <!-- Active Giveaways -->
+          <div style="margin-top:24px">
+            <div style="font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--neon-blue);margin-bottom:12px">Active Giveaways</div>
+            <div class="gwy-row">
+              <span class="row-indicator green"></span>
+              <span class="gwy-prize">Nitro Classic × 1</span>
+              <span class="gwy-id">A3F2E1</span>
+              <span class="gwy-end">⏱ 2h 14m</span>
+            </div>
+            <div class="gwy-row">
+              <span class="row-indicator green"></span>
+              <span class="gwy-prize">$25 Steam Gift Card</span>
+              <span class="gwy-id">B7D4C2</span>
+              <span class="gwy-end">⏱ 1d 3h</span>
+            </div>
+            <div class="gwy-row">
+              <span class="row-indicator orange"></span>
+              <span class="gwy-prize">Custom Role (Sub Only)</span>
+              <span class="gwy-id">C9A1F3</span>
+              <span class="gwy-end">⏱ 47m</span>
+            </div>
+          </div>
+
+          <div style="margin-top:20px;display:flex;gap:12px">
+            <button class="btn btn-primary" style="font-size:0.88rem;padding:10px 20px">Save Changes</button>
+            <button class="btn btn-ghost" style="font-size:0.88rem;padding:10px 20px">Reset</button>
+          </div>
+        </div>
+
+        <!-- ═══ TICKETS PANEL ═══════════════════════════════ -->
+        <div class="dash-panel" data-panel="tickets" style="display:none">
+          <div class="dash-panel-header">
+            <span class="dash-panel-title">🎟️  Ticket Panels</span>
+            <button class="dash-add-btn">＋ Add Panel</button>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Support Staff Role</h4>
+              <p>Role that can view and claim tickets</p>
+            </div>
+            <select class="dash-select">
+              <option>🛡️ Support Staff</option>
+              <option>⚙️ Moderator</option>
+              <option>👑 Admin</option>
+            </select>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Transcript Channel</h4>
+              <p>Where closed ticket logs are sent</p>
+            </div>
+            <div class="channel-pick">
+              <span class="channel-hash">#</span> ticket-logs
+              <span style="margin-left:auto;color:var(--text-muted);font-size:0.8rem">▼</span>
+            </div>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Rating System</h4>
+              <p>Ask users to rate their support experience</p>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Auto-close Inactive</h4>
+              <p>Auto-close tickets with no activity</p>
+            </div>
+            <select class="dash-select">
+              <option>After 48 hours</option>
+              <option>After 24 hours</option>
+              <option>After 7 days</option>
+              <option>Disabled</option>
+            </select>
+          </div>
+
+          <!-- Panel categories -->
+          <div style="margin-top:24px">
+            <div style="font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--neon-blue);margin-bottom:12px">Panel Categories</div>
+            <div class="ticket-category-row">
+              <div class="ticket-cat-icon">🆘</div>
+              <span class="ticket-cat-name">General Support</span>
+              <span class="ticket-cat-count">14 total</span>
+              <label class="toggle" style="margin-left:8px">
+                <input type="checkbox" checked />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="ticket-category-row">
+              <div class="ticket-cat-icon">🛒</div>
+              <span class="ticket-cat-name">Purchase Help</span>
+              <span class="ticket-cat-count">3 total</span>
+              <label class="toggle" style="margin-left:8px">
+                <input type="checkbox" checked />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="ticket-category-row">
+              <div class="ticket-cat-icon">🐛</div>
+              <span class="ticket-cat-name">Bug Reports</span>
+              <span class="ticket-cat-count">7 total</span>
+              <label class="toggle" style="margin-left:8px">
+                <input type="checkbox" />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="ticket-category-row">
+              <div class="ticket-cat-icon">🤝</div>
+              <span class="ticket-cat-name">Partnerships</span>
+              <span class="ticket-cat-count">2 total</span>
+              <label class="toggle" style="margin-left:8px">
+                <input type="checkbox" checked />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div style="margin-top:20px;display:flex;gap:12px">
+            <button class="btn btn-primary" style="font-size:0.88rem;padding:10px 20px">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- ═══ AI SETTINGS PANEL ═══════════════════════════ -->
+        <div class="dash-panel" data-panel="ai" style="display:none">
+          <div class="dash-panel-header">
+            <span class="dash-panel-title">🤖  AI Settings</span>
+            <span class="dash-badge dash-badge-blue">Claude Powered</span>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>AI Chat Enabled</h4>
+              <p>Allow members to use +aichat</p>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Restrict to Channel</h4>
+              <p>Only allow AI commands in a specific channel</p>
+            </div>
+            <div class="channel-pick">
+              <span class="channel-hash">#</span> ai-chat
+              <span style="margin-left:auto;color:var(--text-muted);font-size:0.8rem">▼</span>
+            </div>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Daily Message Limit</h4>
+              <p>Max AI messages per user per day</p>
+            </div>
+            <select class="dash-select">
+              <option>20 messages/day</option>
+              <option>10 messages/day</option>
+              <option>50 messages/day</option>
+              <option>Unlimited</option>
+            </select>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Image Generation</h4>
+              <p>Allow +imgen command for members</p>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Conversation Memory</h4>
+              <p>Remember last N turns per user</p>
+            </div>
+            <select class="dash-select">
+              <option>10 turns</option>
+              <option>5 turns</option>
+              <option>20 turns</option>
+              <option>Disabled</option>
+            </select>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Cooldown</h4>
+              <p>Minimum time between AI requests</p>
+            </div>
+            <select class="dash-select">
+              <option>5 seconds</option>
+              <option>10 seconds</option>
+              <option>30 seconds</option>
+              <option>No cooldown</option>
+            </select>
+          </div>
+
+          <!-- Usage stats -->
+          <div style="margin-top:24px">
+            <div style="font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--neon-blue);margin-bottom:14px">Today's Usage</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <span style="font-size:0.82rem;color:var(--text-secondary);width:100px">Messages</span>
+                <div class="mini-bar-wrap"><div class="mini-bar" style="width:62%"></div></div>
+                <span style="font-family:var(--font-mono);font-size:0.78rem;color:var(--text-muted);width:60px;text-align:right">124 / 200</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px">
+                <span style="font-size:0.82rem;color:var(--text-secondary);width:100px">Unique Users</span>
+                <div class="mini-bar-wrap"><div class="mini-bar" style="width:38%"></div></div>
+                <span style="font-family:var(--font-mono);font-size:0.78rem;color:var(--text-muted);width:60px;text-align:right">19 / 50</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px">
+                <span style="font-size:0.82rem;color:var(--text-secondary);width:100px">Images</span>
+                <div class="mini-bar-wrap"><div class="mini-bar" style="width:20%"></div></div>
+                <span style="font-family:var(--font-mono);font-size:0.78rem;color:var(--text-muted);width:60px;text-align:right">4 / 20</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:20px;display:flex;gap:12px">
+            <button class="btn btn-primary" style="font-size:0.88rem;padding:10px 20px">Save Changes</button>
+            <button class="btn btn-ghost" style="font-size:0.88rem;padding:10px 20px">Reset Usage</button>
+          </div>
+        </div>
+
+        <!-- ═══ POLLS PANEL ═════════════════════════════════ -->
+        <div class="dash-panel" data-panel="polls" style="display:none">
+          <div class="dash-panel-header">
+            <span class="dash-panel-title">📊  Poll Settings</span>
+            <span class="dash-badge dash-badge-green">2 Active</span>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Vote Mode Default</h4>
+              <p>Single choice or multi-choice by default</p>
+            </div>
+            <select class="dash-select">
+              <option>Single Vote</option>
+              <option>Multi Vote</option>
+            </select>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Vote Cooldown</h4>
+              <p>Prevent vote spamming</p>
+            </div>
+            <select class="dash-select">
+              <option>No cooldown</option>
+              <option>30 seconds</option>
+              <option>1 minute</option>
+              <option>5 minutes</option>
+            </select>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Show Live Results</h4>
+              <p>Update bar graph in real time</p>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Anonymous Voting</h4>
+              <p>Don't show who voted for what</p>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Auto-End Polls</h4>
+              <p>Polls end automatically at set duration</p>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Default Duration</h4>
+              <p>How long polls run by default</p>
+            </div>
+            <select class="dash-select">
+              <option>24 hours</option>
+              <option>12 hours</option>
+              <option>48 hours</option>
+              <option>7 days</option>
+            </select>
+          </div>
+
+          <div class="dash-form-row">
+            <div class="dash-form-label">
+              <h4>Log Channel</h4>
+              <p>Where poll results are archived</p>
+            </div>
+            <div class="channel-pick">
+              <span class="channel-hash">#</span> poll-logs
+              <span style="margin-left:auto;color:var(--text-muted);font-size:0.8rem">▼</span>
+            </div>
+          </div>
+
+          <!-- Active polls -->
+          <div style="margin-top:24px">
+            <div style="font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--neon-blue);margin-bottom:14px">Active Polls</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="background:var(--bg-surface);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:16px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+                  <span style="font-size:0.9rem;color:var(--text-primary);font-weight:500">Best game of 2025?</span>
+                  <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--neon-blue)">⏱ 8h left</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:0.8rem;color:var(--text-secondary);width:80px">Valorant</span>
+                    <div class="mini-bar-wrap"><div class="mini-bar" style="width:55%"></div></div>
+                    <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted)">55%</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:0.8rem;color:var(--text-secondary);width:80px">CS2</span>
+                    <div class="mini-bar-wrap"><div class="mini-bar" style="width:30%;background:var(--neon-violet)"></div></div>
+                    <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted)">30%</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:0.8rem;color:var(--text-secondary);width:80px">Apex</span>
+                    <div class="mini-bar-wrap"><div class="mini-bar" style="width:15%;background:var(--neon-purple)"></div></div>
+                    <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted)">15%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:20px;display:flex;gap:12px">
+            <button class="btn btn-primary" style="font-size:0.88rem;padding:10px 20px">Save Changes</button>
+          </div>
+        </div>
+
+      </div><!-- end dash-main -->
+    </div><!-- end dashboard-layout -->
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom:0">
+          <div class="nav-logo-icon">⚡</div>
+          <span style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;background:var(--grad-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">FUSE OS</span>
+        </a>
+        <p>The ultimate all-in-one Discord bot.</p>
+      </div>
+      <div class="footer-col"><h4>Product</h4><ul>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="commands.html">Commands</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Community</h4><ul>
+        <li><a href="#">Support Server</a></li>
+        <li><a href="#">Bug Reports</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 <span>Fuse OS</span>. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+<script>
+  // Dashboard panel switching (sidebar + mobile tabs)
+  const allNavItems = document.querySelectorAll('.dash-nav-item[data-target], .dash-mobile-tab[data-target]');
+  const allPanels   = document.querySelectorAll('.dash-panel[data-panel]');
+
+  allNavItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const target = item.dataset.target;
+      // Update active state for both nav items AND mobile tabs
+      document.querySelectorAll('.dash-nav-item[data-target]').forEach(n => n.classList.remove('active'));
+      document.querySelectorAll('.dash-mobile-tab[data-target]').forEach(n => n.classList.remove('active'));
+      document.querySelectorAll(`[data-target="${target}"]`).forEach(n => n.classList.add('active'));
+      // Show/hide panels
+      allPanels.forEach(p => { p.style.display = p.dataset.panel === target ? '' : 'none'; });
+    });
+  });
+</script>
+</body>
+</html>

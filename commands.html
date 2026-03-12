@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commands — Fuse OS Discord Bot</title>
+  <meta name="description" content="Browse every command available in Fuse OS. Searchable, filterable command reference for all categories." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">⚡</div>
+      <span>FUSE OS</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html"     class="nav-link">Home</a></li>
+      <li><a href="features.html"  class="nav-link">Features</a></li>
+      <li><a href="commands.html"  class="nav-link">Commands</a></li>
+      <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+      <li><a href="#"              class="nav-link">Support</a></li>
+      <a href="#" class="btn btn-primary nav-cta">Invite Bot</a>
+    </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── Page Hero ──────────────────────────────────────────── -->
+<section class="page-hero">
+  <div class="hero-glow hero-glow-1" style="opacity:0.4"></div>
+  <div class="hero-glow hero-glow-2" style="opacity:0.4"></div>
+  <div class="container" style="position:relative;z-index:2">
+    <div class="section-label" style="margin:0 auto 20px;display:table">Command Reference</div>
+    <h1 class="section-title" style="text-align:center">All <span class="gradient-text">Commands</span></h1>
+    <p class="section-subtitle" style="margin:0 auto;text-align:center">Search, filter, and explore every command Fuse OS has to offer. Prefix: <code style="font-family:var(--font-mono);background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);padding:2px 8px;border-radius:4px;color:var(--neon-blue)">+</code></p>
+  </div>
+</section>
+
+<!-- ── Commands Section ────────────────────────────────────── -->
+<section class="commands-section">
+  <div class="container">
+
+    <!-- Search -->
+    <div class="commands-search-bar reveal">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="cmd-search" placeholder="Search commands…" autocomplete="off" />
+    </div>
+
+    <!-- Category filter -->
+    <div class="cmd-categories reveal">
+      <button class="cmd-cat-btn active" data-cat="all">All Commands</button>
+      <button class="cmd-cat-btn" data-cat="moderation">🛡️ Moderation</button>
+      <button class="cmd-cat-btn" data-cat="utility">🛠️ Utility</button>
+      <button class="cmd-cat-btn" data-cat="fun">🎮 Fun</button>
+      <button class="cmd-cat-btn" data-cat="ai">🤖 AI</button>
+      <button class="cmd-cat-btn" data-cat="giveaway">🎉 Giveaway</button>
+      <button class="cmd-cat-btn" data-cat="tickets">🎟️ Tickets</button>
+      <button class="cmd-cat-btn" data-cat="roles">🎭 Roles</button>
+      <button class="cmd-cat-btn" data-cat="polls">📊 Polls</button>
+      <button class="cmd-cat-btn" data-cat="server">⚙️ Server</button>
+    </div>
+
+    <!-- ── Moderation ────────────────────────────────────── -->
+    <div class="commands-group reveal" data-group="moderation">
+      <div class="commands-group-title">🛡️ Moderation</div>
+      <table class="commands-table">
+        <thead>
+          <tr>
+            <th>Command</th>
+            <th>Description</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-category="moderation">
+            <td><span class="cmd-name">+ban</span></td>
+            <td><span class="cmd-desc">Permanently ban a member from the server</span></td>
+            <td><span class="cmd-example">+ban @user Spamming</span></td>
+          </tr>
+          <tr data-category="moderation">
+            <td><span class="cmd-name">+kick</span></td>
+            <td><span class="cmd-desc">Kick a member from the server</span></td>
+            <td><span class="cmd-example">+kick @user Rule violation</span></td>
+          </tr>
+          <tr data-category="moderation">
+            <td><span class="cmd-name">+mute</span></td>
+            <td><span class="cmd-desc">Timeout a member for a specified duration</span></td>
+            <td><span class="cmd-example">+mute @user 30m Spam</span></td>
+          </tr>
+          <tr data-category="moderation">
+            <td><span class="cmd-name">+unmute</span></td>
+            <td><span class="cmd-desc">Remove a timeout from a member</span></td>
+            <td><span class="cmd-example">+unmute @user</span></td>
+          </tr>
+          <tr data-category="moderation">
+            <td><span class="cmd-name">+warn</span></td>
+            <td><span class="cmd-desc">Issue a warning to a member</span></td>
+            <td><span class="cmd-example">+warn @user Bad behaviour</span></td>
+          </tr>
+          <tr data-category="moderation">
+            <td><span class="cmd-name">+warnings</span></td>
+            <td><span class="cmd-desc">View all warnings for a member</span></td>
+            <td><span class="cmd-example">+warnings @user</span></td>
+          </tr>
+          <tr data-category="moderation">
+            <td><span class="cmd-name">+clearwarn</span></td>
+            <td><span class="cmd-desc">Clear all warnings for a member</span></td>
+            <td><span class="cmd-example">+clearwarn @user</span></td>
+          </tr>
+          <tr data-category="moderation">
+            <td><span class="cmd-name">+purge</span></td>
+            <td><span class="cmd-desc">Bulk delete messages from a channel</span></td>
+            <td><span class="cmd-example">+purge 50</span></td>
+          </tr>
+          <tr data-category="moderation">
+            <td><span class="cmd-name">+slowmode</span></td>
+            <td><span class="cmd-desc">Set slowmode delay on a channel</span></td>
+            <td><span class="cmd-example">+slowmode 5s</span></td>
+          </tr>
+          <tr data-category="moderation">
+            <td><span class="cmd-name">+lock</span></td>
+            <td><span class="cmd-desc">Lock a channel so only staff can send messages</span></td>
+            <td><span class="cmd-example">+lock #general</span></td>
+          </tr>
+          <tr data-category="moderation">
+            <td><span class="cmd-name">+unlock</span></td>
+            <td><span class="cmd-desc">Unlock a previously locked channel</span></td>
+            <td><span class="cmd-example">+unlock #general</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── Utility ───────────────────────────────────────── -->
+    <div class="commands-group reveal" data-group="utility">
+      <div class="commands-group-title">🛠️ Utility</div>
+      <table class="commands-table">
+        <thead>
+          <tr><th>Command</th><th>Description</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr data-category="utility">
+            <td><span class="cmd-name">+userinfo</span></td>
+            <td><span class="cmd-desc">View detailed info about a user</span></td>
+            <td><span class="cmd-example">+userinfo @user</span></td>
+          </tr>
+          <tr data-category="utility">
+            <td><span class="cmd-name">+serverinfo</span></td>
+            <td><span class="cmd-desc">Display information about the server</span></td>
+            <td><span class="cmd-example">+serverinfo</span></td>
+          </tr>
+          <tr data-category="utility">
+            <td><span class="cmd-name">+avatar</span></td>
+            <td><span class="cmd-desc">Get a user's full-size avatar</span></td>
+            <td><span class="cmd-example">+avatar @user</span></td>
+          </tr>
+          <tr data-category="utility">
+            <td><span class="cmd-name">+banner</span></td>
+            <td><span class="cmd-desc">Fetch a user's profile banner</span></td>
+            <td><span class="cmd-example">+banner @user</span></td>
+          </tr>
+          <tr data-category="utility">
+            <td><span class="cmd-name">+remind</span></td>
+            <td><span class="cmd-desc">Set a personal DM reminder</span></td>
+            <td><span class="cmd-example">+remind 2h Meeting</span></td>
+          </tr>
+          <tr data-category="utility">
+            <td><span class="cmd-name">+timer</span></td>
+            <td><span class="cmd-desc">Start a countdown timer visible in channel</span></td>
+            <td><span class="cmd-example">+timer 10m Round starts</span></td>
+          </tr>
+          <tr data-category="utility">
+            <td><span class="cmd-name">+countdown</span></td>
+            <td><span class="cmd-desc">Create a countdown to a specific date</span></td>
+            <td><span class="cmd-example">+countdown 2025-12-25 Christmas</span></td>
+          </tr>
+          <tr data-category="utility">
+            <td><span class="cmd-name">+translate</span></td>
+            <td><span class="cmd-desc">Translate text to a specified language</span></td>
+            <td><span class="cmd-example">+translate es Hello world</span></td>
+          </tr>
+          <tr data-category="utility">
+            <td><span class="cmd-name">+embed</span></td>
+            <td><span class="cmd-desc">Create and send a custom embed message</span></td>
+            <td><span class="cmd-example">+embed #channel Title | Body</span></td>
+          </tr>
+          <tr data-category="utility">
+            <td><span class="cmd-name">+announce</span></td>
+            <td><span class="cmd-desc">Send a rich announcement embed to a channel</span></td>
+            <td><span class="cmd-example">+announce #news Update</span></td>
+          </tr>
+          <tr data-category="utility">
+            <td><span class="cmd-name">+ping</span></td>
+            <td><span class="cmd-desc">Check the bot's response latency</span></td>
+            <td><span class="cmd-example">+ping</span></td>
+          </tr>
+          <tr data-category="utility">
+            <td><span class="cmd-name">+uptime</span></td>
+            <td><span class="cmd-desc">Display how long the bot has been online</span></td>
+            <td><span class="cmd-example">+uptime</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── Fun ───────────────────────────────────────────── -->
+    <div class="commands-group reveal" data-group="fun">
+      <div class="commands-group-title">🎮 Fun</div>
+      <table class="commands-table">
+        <thead>
+          <tr><th>Command</th><th>Description</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr data-category="fun">
+            <td><span class="cmd-name">+8ball</span></td>
+            <td><span class="cmd-desc">Ask the magic 8-ball a yes/no question</span></td>
+            <td><span class="cmd-example">+8ball Will I win?</span></td>
+          </tr>
+          <tr data-category="fun">
+            <td><span class="cmd-name">+coinflip</span></td>
+            <td><span class="cmd-desc">Flip a coin — heads or tails</span></td>
+            <td><span class="cmd-example">+coinflip</span></td>
+          </tr>
+          <tr data-category="fun">
+            <td><span class="cmd-name">+roll</span></td>
+            <td><span class="cmd-desc">Roll a dice with custom sides</span></td>
+            <td><span class="cmd-example">+roll 20</span></td>
+          </tr>
+          <tr data-category="fun">
+            <td><span class="cmd-name">+rps</span></td>
+            <td><span class="cmd-desc">Play rock paper scissors against the bot</span></td>
+            <td><span class="cmd-example">+rps rock</span></td>
+          </tr>
+          <tr data-category="fun">
+            <td><span class="cmd-name">+meme</span></td>
+            <td><span class="cmd-desc">Fetch a random meme from Reddit</span></td>
+            <td><span class="cmd-example">+meme</span></td>
+          </tr>
+          <tr data-category="fun">
+            <td><span class="cmd-name">+joke</span></td>
+            <td><span class="cmd-desc">Get a random programming or dad joke</span></td>
+            <td><span class="cmd-example">+joke</span></td>
+          </tr>
+          <tr data-category="fun">
+            <td><span class="cmd-name">+quote</span></td>
+            <td><span class="cmd-desc">Display a random motivational quote</span></td>
+            <td><span class="cmd-example">+quote</span></td>
+          </tr>
+          <tr data-category="fun">
+            <td><span class="cmd-name">+trivia</span></td>
+            <td><span class="cmd-desc">Start a trivia question with multiple choice</span></td>
+            <td><span class="cmd-example">+trivia science</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── AI Commands ───────────────────────────────────── -->
+    <div class="commands-group reveal" data-group="ai">
+      <div class="commands-group-title">🤖 AI Commands</div>
+      <table class="commands-table">
+        <thead>
+          <tr><th>Command</th><th>Description</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr data-category="ai">
+            <td><span class="cmd-name">+aichat</span></td>
+            <td><span class="cmd-desc">Start or continue a conversation with Claude AI</span></td>
+            <td><span class="cmd-example">+aichat Explain black holes</span></td>
+          </tr>
+          <tr data-category="ai">
+            <td><span class="cmd-name">+aireset</span></td>
+            <td><span class="cmd-desc">Reset your AI conversation history</span></td>
+            <td><span class="cmd-example">+aireset</span></td>
+          </tr>
+          <tr data-category="ai">
+            <td><span class="cmd-name">+aistats</span></td>
+            <td><span class="cmd-desc">View your personal AI usage statistics</span></td>
+            <td><span class="cmd-example">+aistats</span></td>
+          </tr>
+          <tr data-category="ai">
+            <td><span class="cmd-name">+imgen</span></td>
+            <td><span class="cmd-desc">Generate an image from a text prompt</span></td>
+            <td><span class="cmd-example">+imgen futuristic city at night</span></td>
+          </tr>
+          <tr data-category="ai">
+            <td><span class="cmd-name">+summarise</span></td>
+            <td><span class="cmd-desc">Ask AI to summarise a block of pasted text</span></td>
+            <td><span class="cmd-example">+summarise [paste text]</span></td>
+          </tr>
+          <tr data-category="ai">
+            <td><span class="cmd-name">+aiconfig</span></td>
+            <td><span class="cmd-desc">Open the AI configuration admin panel (admin)</span></td>
+            <td><span class="cmd-example">+aiconfig</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── Giveaway ──────────────────────────────────────── -->
+    <div class="commands-group reveal" data-group="giveaway">
+      <div class="commands-group-title">🎉 Giveaway</div>
+      <table class="commands-table">
+        <thead>
+          <tr><th>Command</th><th>Description</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr data-category="giveaway">
+            <td><span class="cmd-name">+gwy</span></td>
+            <td><span class="cmd-desc">Open the giveaway creation panel</span></td>
+            <td><span class="cmd-example">+gwy</span></td>
+          </tr>
+          <tr data-category="giveaway">
+            <td><span class="cmd-name">+gwyend</span></td>
+            <td><span class="cmd-desc">Force-end an active giveaway by ID</span></td>
+            <td><span class="cmd-example">+gwyend A3F2E1</span></td>
+          </tr>
+          <tr data-category="giveaway">
+            <td><span class="cmd-name">+gwyreroll</span></td>
+            <td><span class="cmd-desc">Reroll winners for an ended giveaway</span></td>
+            <td><span class="cmd-example">+gwyreroll A3F2E1</span></td>
+          </tr>
+          <tr data-category="giveaway">
+            <td><span class="cmd-name">+gwylist</span></td>
+            <td><span class="cmd-desc">List all active giveaways in this server</span></td>
+            <td><span class="cmd-example">+gwylist</span></td>
+          </tr>
+          <tr data-category="giveaway">
+            <td><span class="cmd-name">+gwyconfig</span></td>
+            <td><span class="cmd-desc">Configure giveaway settings (ping role, etc)</span></td>
+            <td><span class="cmd-example">+gwyconfig</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── Tickets ───────────────────────────────────────── -->
+    <div class="commands-group reveal" data-group="tickets">
+      <div class="commands-group-title">🎟️ Tickets</div>
+      <table class="commands-table">
+        <thead>
+          <tr><th>Command</th><th>Description</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr data-category="tickets">
+            <td><span class="cmd-name">+ticketpanel</span></td>
+            <td><span class="cmd-desc">Create a ticket panel in the current channel</span></td>
+            <td><span class="cmd-example">+ticketpanel</span></td>
+          </tr>
+          <tr data-category="tickets">
+            <td><span class="cmd-name">+closeticket</span></td>
+            <td><span class="cmd-desc">Close the current ticket channel</span></td>
+            <td><span class="cmd-example">+closeticket</span></td>
+          </tr>
+          <tr data-category="tickets">
+            <td><span class="cmd-name">+claimticket</span></td>
+            <td><span class="cmd-desc">Claim a ticket as the assigned staff member</span></td>
+            <td><span class="cmd-example">+claimticket</span></td>
+          </tr>
+          <tr data-category="tickets">
+            <td><span class="cmd-name">+adduser</span></td>
+            <td><span class="cmd-desc">Add a user to an existing ticket</span></td>
+            <td><span class="cmd-example">+adduser @user</span></td>
+          </tr>
+          <tr data-category="tickets">
+            <td><span class="cmd-name">+removeuser</span></td>
+            <td><span class="cmd-desc">Remove a user from an existing ticket</span></td>
+            <td><span class="cmd-example">+removeuser @user</span></td>
+          </tr>
+          <tr data-category="tickets">
+            <td><span class="cmd-name">+transcript</span></td>
+            <td><span class="cmd-desc">Generate and DM a transcript of a ticket</span></td>
+            <td><span class="cmd-example">+transcript</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── Roles ─────────────────────────────────────────── -->
+    <div class="commands-group reveal" data-group="roles">
+      <div class="commands-group-title">🎭 Roles</div>
+      <table class="commands-table">
+        <thead>
+          <tr><th>Command</th><th>Description</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr data-category="roles">
+            <td><span class="cmd-name">+reactionrole</span></td>
+            <td><span class="cmd-desc">Create a reaction role panel in the channel</span></td>
+            <td><span class="cmd-example">+reactionrole</span></td>
+          </tr>
+          <tr data-category="roles">
+            <td><span class="cmd-name">+buttonrole</span></td>
+            <td><span class="cmd-desc">Create a button-based role panel</span></td>
+            <td><span class="cmd-example">+buttonrole</span></td>
+          </tr>
+          <tr data-category="roles">
+            <td><span class="cmd-name">+autoroleconfig</span></td>
+            <td><span class="cmd-desc">Open the autorole admin configuration panel</span></td>
+            <td><span class="cmd-example">+autoroleconfig</span></td>
+          </tr>
+          <tr data-category="roles">
+            <td><span class="cmd-name">+addautorole</span></td>
+            <td><span class="cmd-desc">Add a new custom autorole rule by Role ID</span></td>
+            <td><span class="cmd-example">+addautorole 123456 30m</span></td>
+          </tr>
+          <tr data-category="roles">
+            <td><span class="cmd-name">+autorolestats</span></td>
+            <td><span class="cmd-desc">Show all configured autoroles for this server</span></td>
+            <td><span class="cmd-example">+autorolestats</span></td>
+          </tr>
+          <tr data-category="roles">
+            <td><span class="cmd-name">+ytlink</span></td>
+            <td><span class="cmd-desc">Start YouTube subscription verification</span></td>
+            <td><span class="cmd-example">+ytlink</span></td>
+          </tr>
+          <tr data-category="roles">
+            <td><span class="cmd-name">+ytstatus</span></td>
+            <td><span class="cmd-desc">Check your YouTube verification status</span></td>
+            <td><span class="cmd-example">+ytstatus</span></td>
+          </tr>
+          <tr data-category="roles">
+            <td><span class="cmd-name">+ytrescan</span></td>
+            <td><span class="cmd-desc">Admin: re-scan all linked YouTube members</span></td>
+            <td><span class="cmd-example">+ytrescan</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── Polls ─────────────────────────────────────────── -->
+    <div class="commands-group reveal" data-group="polls">
+      <div class="commands-group-title">📊 Polls</div>
+      <table class="commands-table">
+        <thead>
+          <tr><th>Command</th><th>Description</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr data-category="polls">
+            <td><span class="cmd-name">+poll</span></td>
+            <td><span class="cmd-desc">Create a new interactive poll panel</span></td>
+            <td><span class="cmd-example">+poll Best game? Valorant|CS2|Apex</span></td>
+          </tr>
+          <tr data-category="polls">
+            <td><span class="cmd-name">+endpoll</span></td>
+            <td><span class="cmd-desc">Manually end an active poll by ID</span></td>
+            <td><span class="cmd-example">+endpoll POLL-ID</span></td>
+          </tr>
+          <tr data-category="polls">
+            <td><span class="cmd-name">+pollresults</span></td>
+            <td><span class="cmd-desc">Display current results for an active poll</span></td>
+            <td><span class="cmd-example">+pollresults POLL-ID</span></td>
+          </tr>
+          <tr data-category="polls">
+            <td><span class="cmd-name">+pollconfig</span></td>
+            <td><span class="cmd-desc">Configure poll settings for the server</span></td>
+            <td><span class="cmd-example">+pollconfig</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── Server Management ─────────────────────────────── -->
+    <div class="commands-group reveal" data-group="server">
+      <div class="commands-group-title">⚙️ Server Management</div>
+      <table class="commands-table">
+        <thead>
+          <tr><th>Command</th><th>Description</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr data-category="server">
+            <td><span class="cmd-name">+setup</span></td>
+            <td><span class="cmd-desc">Run the interactive server setup wizard</span></td>
+            <td><span class="cmd-example">+setup</span></td>
+          </tr>
+          <tr data-category="server">
+            <td><span class="cmd-name">+prefix</span></td>
+            <td><span class="cmd-desc">Change the bot command prefix for this server</span></td>
+            <td><span class="cmd-example">+prefix !</span></td>
+          </tr>
+          <tr data-category="server">
+            <td><span class="cmd-name">+welcome</span></td>
+            <td><span class="cmd-desc">Configure the welcome message system</span></td>
+            <td><span class="cmd-example">+welcome</span></td>
+          </tr>
+          <tr data-category="server">
+            <td><span class="cmd-name">+setlog</span></td>
+            <td><span class="cmd-desc">Set the moderation log channel</span></td>
+            <td><span class="cmd-example">+setlog #mod-logs</span></td>
+          </tr>
+          <tr data-category="server">
+            <td><span class="cmd-name">+help</span></td>
+            <td><span class="cmd-desc">Open the interactive help panel</span></td>
+            <td><span class="cmd-example">+help</span></td>
+          </tr>
+          <tr data-category="server">
+            <td><span class="cmd-name">+dashboard</span></td>
+            <td><span class="cmd-desc">Get a link to the web dashboard</span></td>
+            <td><span class="cmd-example">+dashboard</span></td>
+          </tr>
+          <tr data-category="server">
+            <td><span class="cmd-name">+stats</span></td>
+            <td><span class="cmd-desc">View server-wide usage statistics</span></td>
+            <td><span class="cmd-example">+stats</span></td>
+          </tr>
+          <tr data-category="server">
+            <td><span class="cmd-name">+invite</span></td>
+            <td><span class="cmd-desc">Get the bot invite link to share</span></td>
+            <td><span class="cmd-example">+invite</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── CTA ─────────────────────────────────────────────────── -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <div class="cta-glow"></div>
+      <h2 class="cta-title">Ready to use these <span class="gradient-text">commands?</span></h2>
+      <p class="cta-desc">Invite Fuse OS to your server and start running commands in seconds.</p>
+      <div class="cta-buttons">
+        <a href="#" class="btn btn-primary">Invite Fuse OS</a>
+        <a href="features.html" class="btn btn-secondary">Explore Features</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom:0">
+          <div class="nav-logo-icon">⚡</div>
+          <span style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;background:var(--grad-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">FUSE OS</span>
+        </a>
+        <p>The ultimate all-in-one Discord bot.</p>
+      </div>
+      <div class="footer-col"><h4>Product</h4><ul>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="commands.html">Commands</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Community</h4><ul>
+        <li><a href="#">Support Server</a></li>
+        <li><a href="#">Bug Reports</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 <span>Fuse OS</span>. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>

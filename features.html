@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Features — Fuse OS Discord Bot</title>
+  <meta name="description" content="Explore every feature of Fuse OS — AI chat, giveaways, tickets, polls, reaction roles, YouTube verification, translation, and more." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">⚡</div>
+      <span>FUSE OS</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html"    class="nav-link">Home</a></li>
+      <li><a href="features.html" class="nav-link">Features</a></li>
+      <li><a href="commands.html" class="nav-link">Commands</a></li>
+      <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+      <li><a href="#" class="nav-link">Support</a></li>
+      <a href="#" class="btn btn-primary nav-cta">Invite Bot</a>
+    </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── Page Hero ──────────────────────────────────────────── -->
+<section class="page-hero">
+  <div class="hero-glow hero-glow-1" style="opacity:0.5"></div>
+  <div class="hero-glow hero-glow-2" style="opacity:0.5"></div>
+  <div class="container" style="position:relative;z-index:2">
+    <div class="section-label" style="margin:0 auto 20px;display:table">Feature Systems</div>
+    <h1 class="section-title" style="text-align:center">12 Powerful Systems.<br><span class="gradient-text">One Bot.</span></h1>
+    <p class="section-subtitle" style="margin:0 auto;text-align:center">Everything built and maintained in-house. No third-party dependencies, no feature fragmentation.</p>
+  </div>
+</section>
+
+<!-- ── Features ───────────────────────────────────────────── -->
+<section class="features-section">
+  <div class="container">
+
+    <div class="features-grid">
+
+      <!-- AI System -->
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-card-accent" style="background:var(--neon-blue)"></div>
+        <div class="feature-card-top">
+          <div class="feature-big-icon">🤖</div>
+          <div class="feature-card-title-block">
+            <h3>AI System</h3>
+            <span>Powered by Claude</span>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li class="feature-list-item">AI chat with per-user conversation memory (10 turns)</li>
+          <li class="feature-list-item">Admin configuration panel with toggles &amp; limits</li>
+          <li class="feature-list-item">Image generation prompt builder via +imgen</li>
+          <li class="feature-list-item">Channel restriction &amp; daily usage limits</li>
+          <li class="feature-list-item">Per-user cooldown system</li>
+          <li class="feature-list-item">+aistats for personal usage stats</li>
+        </ul>
+      </div>
+
+      <!-- Ticket System -->
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-card-accent" style="background:var(--neon-violet)"></div>
+        <div class="feature-card-top">
+          <div class="feature-big-icon">🎟️</div>
+          <div class="feature-card-title-block">
+            <h3>Ticket System</h3>
+            <span>Full Support Suite</span>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li class="feature-list-item">Dropdown ticket panels with multiple categories</li>
+          <li class="feature-list-item">Staff claim system with assignment tracking</li>
+          <li class="feature-list-item">Automatic ticket transcript logs</li>
+          <li class="feature-list-item">Reopen / close / delete controls</li>
+          <li class="feature-list-item">Star-rating system after ticket close</li>
+          <li class="feature-list-item">Dedicated log channels per category</li>
+        </ul>
+      </div>
+
+      <!-- Giveaway System -->
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-card-accent" style="background:var(--neon-purple)"></div>
+        <div class="feature-card-top">
+          <div class="feature-big-icon">🎉</div>
+          <div class="feature-card-title-block">
+            <h3>Giveaway System</h3>
+            <span>Smart Giveaways</span>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li class="feature-list-item">Live countdown timer with progress bar</li>
+          <li class="feature-list-item">Join button with live entry counter</li>
+          <li class="feature-list-item">Subscriber-only giveaway mode</li>
+          <li class="feature-list-item">Role ping on giveaway start</li>
+          <li class="feature-list-item">Winner auto-DM with prize details</li>
+          <li class="feature-list-item">Reroll winners, giveaway leaderboard</li>
+        </ul>
+      </div>
+
+      <!-- Poll System -->
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-card-accent" style="background:var(--neon-cyan)"></div>
+        <div class="feature-card-top">
+          <div class="feature-big-icon">📊</div>
+          <div class="feature-card-title-block">
+            <h3>Poll System</h3>
+            <span>Community Votes</span>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li class="feature-list-item">Interactive poll panels via dropdown</li>
+          <li class="feature-list-item">Multi-vote or single-vote configuration</li>
+          <li class="feature-list-item">Per-user vote cooldown</li>
+          <li class="feature-list-item">Automatic poll end with timer</li>
+          <li class="feature-list-item">Tie detection and announcement</li>
+          <li class="feature-list-item">Visual bar graph result display</li>
+        </ul>
+      </div>
+
+      <!-- Reaction Roles -->
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-card-accent" style="background:var(--neon-blue)"></div>
+        <div class="feature-card-top">
+          <div class="feature-big-icon">🎭</div>
+          <div class="feature-card-title-block">
+            <h3>Reaction Roles</h3>
+            <span>Role Management</span>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li class="feature-list-item">Emoji reaction role panels</li>
+          <li class="feature-list-item">Button-style role selection</li>
+          <li class="feature-list-item">Dropdown select menus for roles</li>
+          <li class="feature-list-item">Custom embed role generator</li>
+          <li class="feature-list-item">Multiple simultaneous panels</li>
+          <li class="feature-list-item">Role toggle (add/remove on click)</li>
+        </ul>
+      </div>
+
+      <!-- Server Automation -->
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-card-accent" style="background:var(--neon-violet)"></div>
+        <div class="feature-card-top">
+          <div class="feature-big-icon">⚙️</div>
+          <div class="feature-card-title-block">
+            <h3>Server Automation</h3>
+            <span>Smart Autoroles</span>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li class="feature-list-item">Autorole configuration panel</li>
+          <li class="feature-list-item">Timed role removal with persistent timers</li>
+          <li class="feature-list-item">YouTube subscriber role verification</li>
+          <li class="feature-list-item">Leaderboard reward roles (Top 3)</li>
+          <li class="feature-list-item">Newcomer role on join</li>
+          <li class="feature-list-item">Content Fan role via YouTube API</li>
+        </ul>
+      </div>
+
+      <!-- Utilities -->
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-card-accent" style="background:var(--neon-cyan)"></div>
+        <div class="feature-card-top">
+          <div class="feature-big-icon">🛠️</div>
+          <div class="feature-card-title-block">
+            <h3>Utilities</h3>
+            <span>Server Tools</span>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li class="feature-list-item">Countdown timers with DM alerts</li>
+          <li class="feature-list-item">Personal reminders via DM</li>
+          <li class="feature-list-item">Countdown display commands</li>
+          <li class="feature-list-item">Server info &amp; user info commands</li>
+          <li class="feature-list-item">Embed builder for announcements</li>
+          <li class="feature-list-item">Avatar &amp; banner fetcher</li>
+        </ul>
+      </div>
+
+      <!-- Announcements -->
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-card-accent" style="background:var(--neon-purple)"></div>
+        <div class="feature-card-top">
+          <div class="feature-big-icon">📢</div>
+          <div class="feature-card-title-block">
+            <h3>Announcements</h3>
+            <span>Channel Broadcasts</span>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li class="feature-list-item">Rich embed announcements</li>
+          <li class="feature-list-item">Multi-channel broadcast support</li>
+          <li class="feature-list-item">Scheduled announcement delivery</li>
+          <li class="feature-list-item">Role ping integration</li>
+          <li class="feature-list-item">Custom colour &amp; thumbnail support</li>
+          <li class="feature-list-item">Cross-server announcement forwarding</li>
+        </ul>
+      </div>
+
+      <!-- Translation -->
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-card-accent" style="background:var(--neon-blue)"></div>
+        <div class="feature-card-top">
+          <div class="feature-big-icon">🌐</div>
+          <div class="feature-card-title-block">
+            <h3>Translation</h3>
+            <span>Global Community</span>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li class="feature-list-item">Auto language detection on messages</li>
+          <li class="feature-list-item">Flag emoji display per language</li>
+          <li class="feature-list-item">50+ supported languages</li>
+          <li class="feature-list-item">Translation panel per channel</li>
+          <li class="feature-list-item">Persistent user language preferences</li>
+          <li class="feature-list-item">Voice channel translation support</li>
+        </ul>
+      </div>
+
+      <!-- Logging -->
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-card-accent" style="background:var(--neon-violet)"></div>
+        <div class="feature-card-top">
+          <div class="feature-big-icon">📋</div>
+          <div class="feature-card-title-block">
+            <h3>Logging System</h3>
+            <span>Full Audit Trail</span>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li class="feature-list-item">Poll vote and result logs</li>
+          <li class="feature-list-item">Giveaway creation and end logs</li>
+          <li class="feature-list-item">Ticket open/close/transcript logs</li>
+          <li class="feature-list-item">Moderation action logs</li>
+          <li class="feature-list-item">Autorole assignment logs</li>
+          <li class="feature-list-item">YouTube verification logs</li>
+        </ul>
+      </div>
+
+      <!-- Gaming Roles -->
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-card-accent" style="background:var(--neon-cyan)"></div>
+        <div class="feature-card-top">
+          <div class="feature-big-icon">🎮</div>
+          <div class="feature-card-title-block">
+            <h3>Gaming Roles</h3>
+            <span>Player Identity</span>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li class="feature-list-item">Minecraft Player role assignment</li>
+          <li class="feature-list-item">Roblox Player role assignment</li>
+          <li class="feature-list-item">Valorant Player role assignment</li>
+          <li class="feature-list-item">Content Fan role (YouTube verified)</li>
+          <li class="feature-list-item">Creator role for content creators</li>
+          <li class="feature-list-item">Custom gaming role panels</li>
+        </ul>
+      </div>
+
+      <!-- Welcome / Farewell -->
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-card-accent" style="background:var(--neon-purple)"></div>
+        <div class="feature-card-top">
+          <div class="feature-big-icon">👋</div>
+          <div class="feature-card-title-block">
+            <h3>Welcome System</h3>
+            <span>Member Onboarding</span>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li class="feature-list-item">Custom welcome embed messages</li>
+          <li class="feature-list-item">Farewell messages on member leave</li>
+          <li class="feature-list-item">Welcome card image generation</li>
+          <li class="feature-list-item">DM welcome message option</li>
+          <li class="feature-list-item">Rule acceptance gate</li>
+          <li class="feature-list-item">Server growth tracking</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ─────────────────────────────────────────────────── -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <div class="cta-glow"></div>
+      <h2 class="cta-title">All This — <span class="gradient-text">One Invite</span></h2>
+      <p class="cta-desc">No feature unlock, no premium tiers for core features. Just invite and configure.</p>
+      <div class="cta-buttons">
+        <a href="#" class="btn btn-primary">Invite Fuse OS Free</a>
+        <a href="commands.html" class="btn btn-secondary">View All Commands</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom:0">
+          <div class="nav-logo-icon">⚡</div>
+          <span style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;background:var(--grad-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">FUSE OS</span>
+        </a>
+        <p>The ultimate all-in-one Discord bot.</p>
+      </div>
+      <div class="footer-col"><h4>Product</h4><ul>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="commands.html">Commands</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Community</h4><ul>
+        <li><a href="#">Support Server</a></li>
+        <li><a href="#">Bug Reports</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 <span>Fuse OS</span>. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>

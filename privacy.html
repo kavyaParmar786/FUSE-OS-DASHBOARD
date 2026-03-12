@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Fuse OS Discord Bot</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">⚡</div>
+      <span>FUSE OS</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html"     class="nav-link">Home</a></li>
+      <li><a href="features.html"  class="nav-link">Features</a></li>
+      <li><a href="commands.html"  class="nav-link">Commands</a></li>
+      <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+      <li><a href="#"              class="nav-link">Support</a></li>
+      <a href="#" class="btn btn-primary nav-cta">Invite Bot</a>
+    </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="hero-glow hero-glow-1" style="opacity:0.3"></div>
+  <div class="container" style="position:relative;z-index:2">
+    <div class="section-label" style="margin:0 auto 20px;display:table">Legal</div>
+    <h1 class="section-title" style="text-align:center"><span class="gradient-text">Privacy Policy</span></h1>
+    <p class="section-subtitle" style="margin:0 auto;text-align:center">How Fuse OS collects, uses, and protects your data.</p>
+  </div>
+</section>
+
+<section class="legal-section">
+  <div class="container">
+    <div class="legal-body">
+
+      <div class="legal-meta">
+        <span>📅 Last Updated: January 1, 2025</span>
+        <span>|</span>
+        <span>📋 Version 2.0</span>
+        <span>|</span>
+        <span>✉️ fuseos@support.discord</span>
+      </div>
+
+      <p>This Privacy Policy describes how Fuse OS ("the Bot", "we", "us", or "our") collects, uses, stores, and shares information when you use our Discord bot service. By adding Fuse OS to your server or interacting with the Bot, you agree to the practices described in this policy.</p>
+
+      <h2>1. Information We Collect</h2>
+
+      <p>Fuse OS collects the minimum data necessary to provide its services. We collect the following categories of information:</p>
+
+      <p><strong>Discord User Data:</strong></p>
+      <ul>
+        <li>Discord User IDs — used to identify users across commands and features</li>
+        <li>Discord Server (Guild) IDs — used to store server-specific configurations</li>
+        <li>Discord Username and Discriminator — used for display in logs and embeds</li>
+        <li>Discord Role IDs — used for autorole and permission management</li>
+        <li>Discord Channel IDs — used for configuration of logging and panel channels</li>
+      </ul>
+
+      <p><strong>Bot Interaction Data:</strong></p>
+      <ul>
+        <li>Command usage logs — timestamps and command names (no message content)</li>
+        <li>Giveaway entries — Discord User IDs linked to giveaway IDs</li>
+        <li>Poll votes — anonymous vote counts and, where enabled, user vote choices</li>
+        <li>Ticket content — message transcripts within ticket channels (server admin-configured)</li>
+        <li>AI conversation history — the last N messages of a user's AI chat session (stored temporarily in memory)</li>
+        <li>Verification codes — temporary codes for YouTube subscription verification</li>
+      </ul>
+
+      <p><strong>YouTube Integration Data (Optional):</strong></p>
+      <ul>
+        <li>YouTube comment scan results — we read comments on a specified video to verify subscription codes</li>
+        <li>YouTube Channel ID — stored in server configuration only; we do not store YouTube viewer data</li>
+        <li>No YouTube account credentials or OAuth tokens are stored by default</li>
+      </ul>
+
+      <h2>2. How We Use Your Data</h2>
+
+      <p>All data collected by Fuse OS is used exclusively to provide and improve the Bot's features. Specifically:</p>
+      <ul>
+        <li>To execute commands and return results to users</li>
+        <li>To persist server configurations between bot restarts</li>
+        <li>To track giveaway entries and select winners</li>
+        <li>To record poll votes and display results</li>
+        <li>To manage ticket creation, assignment, and archival</li>
+        <li>To assign and remove Discord roles automatically</li>
+        <li>To verify YouTube subscription status for Content Fan roles</li>
+        <li>To maintain AI conversation context for the duration of a session</li>
+        <li>To generate leaderboards based on giveaway wins and server activity</li>
+      </ul>
+
+      <p>We do <strong>not</strong> use your data for advertising, profiling, resale, or any commercial purpose beyond operating the Bot.</p>
+
+      <h2>3. Data Storage and Retention</h2>
+
+      <p>Server configuration data (role IDs, channel IDs, settings) is stored in JSON files on our secure server infrastructure and is retained as long as Fuse OS remains in your Discord server.</p>
+
+      <p>Giveaway and poll data is retained for 30 days after the event ends, then permanently deleted.</p>
+
+      <p>AI conversation history is stored in-memory only and is cleared when the bot restarts or when a user runs the <code>+aireset</code> command. It is never written to permanent storage.</p>
+
+      <p>Verification codes expire after 30 minutes and are removed from storage automatically.</p>
+
+      <p>Ticket transcripts are stored only in the Discord channel you configure and are not retained on our servers unless you use the transcript export feature, in which case the export is sent directly to you via Discord DM.</p>
+
+      <h2>4. Data Sharing and Third Parties</h2>
+
+      <p>We do not sell, trade, or rent your personal information to third parties. We may share data with the following parties only to the extent necessary to operate the Bot:</p>
+      <ul>
+        <li><strong>Anthropic (Claude AI):</strong> If you use the AI chat feature, your message content is sent to Anthropic's API to generate a response. Anthropic's own privacy policy governs that data. We do not store AI conversation content after the session ends.</li>
+        <li><strong>Google (YouTube Data API):</strong> If you use the YouTube verification feature, we make read-only API calls to check for public comments. No user data is sent to Google beyond what is required for the API request.</li>
+        <li><strong>Discord:</strong> All bot interactions occur on Discord's platform. Discord's Privacy Policy governs all data on their platform.</li>
+      </ul>
+
+      <h2>5. Security</h2>
+
+      <p>We take reasonable technical measures to protect stored data, including:</p>
+      <ul>
+        <li>Data stored on servers with restricted access and encrypted disks</li>
+        <li>API keys and credentials stored as environment variables, never in code</li>
+        <li>Regular security reviews of our codebase</li>
+        <li>No storage of sensitive personal information beyond Discord IDs</li>
+      </ul>
+      <p>However, no method of transmission or storage is 100% secure. While we strive to protect your data, we cannot guarantee absolute security.</p>
+
+      <h2>6. Children's Privacy</h2>
+      <p>Fuse OS is not directed to children under the age of 13. We do not knowingly collect personal information from children under 13. Discord itself requires users to be at least 13 years old. If you believe a child under 13 has provided us with personal information, please contact us immediately.</p>
+
+      <h2>7. Your Rights and Choices</h2>
+
+      <p>Depending on your jurisdiction, you may have the right to:</p>
+      <ul>
+        <li><strong>Access:</strong> Request information about what data we hold about you</li>
+        <li><strong>Deletion:</strong> Request deletion of your data by contacting us or kicking the Bot from your server</li>
+        <li><strong>Correction:</strong> Request correction of inaccurate data</li>
+        <li><strong>Portability:</strong> Request an export of your server's configuration data</li>
+        <li><strong>Objection:</strong> Object to specific processing of your data</li>
+      </ul>
+      <p>To exercise any of these rights, please contact us via our support Discord server.</p>
+
+      <h2>8. Data Deletion</h2>
+      <p>You can delete all data associated with your server by removing Fuse OS from the server. Within 30 days of removal, all server-specific data will be permanently deleted from our systems. Individual users may request deletion of their personal data by contacting support.</p>
+
+      <h2>9. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. We will notify users of significant changes by posting a notice in our support Discord server and updating the "Last Updated" date above. Continued use of the Bot after changes constitutes acceptance of the updated policy.</p>
+
+      <h2>10. Contact Us</h2>
+      <p>If you have questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:</p>
+      <ul>
+        <li><strong>Support Server:</strong> Join our Discord server and open a support ticket</li>
+        <li><strong>Discord:</strong> Direct message the Bot owner via the support server</li>
+      </ul>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom:0">
+          <div class="nav-logo-icon">⚡</div>
+          <span style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;background:var(--grad-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">FUSE OS</span>
+        </a>
+        <p>The ultimate all-in-one Discord bot.</p>
+      </div>
+      <div class="footer-col"><h4>Product</h4><ul>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="commands.html">Commands</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Community</h4><ul>
+        <li><a href="#">Support Server</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 <span>Fuse OS</span>. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>
